@@ -73,7 +73,7 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "customer" routes for the application.
+     * Define the "customer_temp" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
      *
@@ -82,12 +82,12 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapCustomerRoutes()
     {
         Route::group([
-            'middleware' => ['web', 'customer', 'auth:customer'],
-            'prefix' => 'customer',
-            'as' => 'customer.',
+            'middleware' => ['web', 'customer_temp', 'auth:customer_temp'],
+            'prefix' => 'customer_temp',
+            'as' => 'customer_temp.',
             'namespace' => $this->namespace,
         ], function ($router) {
-            require base_path('routes/customer.php');
+            require base_path('routes/customer_temp.php');
         });
     }
 

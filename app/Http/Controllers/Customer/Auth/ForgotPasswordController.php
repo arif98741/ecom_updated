@@ -28,7 +28,7 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('customer.guest');
+        $this->middleware('customer_temp.guest');
     }
 
     /**
@@ -38,7 +38,7 @@ class ForgotPasswordController extends Controller
      */
     public function showLinkRequestForm()
     {
-        return view('customer.auth.passwords.email');
+        return view('customer_temp.auth.passwords.email');
     }
 
     /**

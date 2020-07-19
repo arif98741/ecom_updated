@@ -1,68 +1,85 @@
-@extends('admin.layout.auth')
+<!doctype html>
+<html lang="en">
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/login') }}">
-                        {{ csrf_field() }}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('asset/admin/vendor/bootstrap/css/bootstrap.min.css')}}">
+    <link href="{{ asset('asset/admin/vendor/fonts/circular-std/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('asset/admin/libs/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('asset/admin/vendor/fonts/fontawesome/css/fontawesome-all.css')}}">
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+    </style>
+</head>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
+<body>
+<!-- ============================================================== -->
+<!-- login page  -->
+<!-- ============================================================== -->
+<div class="splash-container">
+    <div class="card ">
+        <div class="card-header text-center"><a href="#"><img class="logo-img"
+                                                              src="{{ asset('asset/admin/images/logo.png')}}"
+                                                              alt="logo"></a><span
+                class="splash-description">Please enter your user information.</span></div>
+        <div class="card-body">
+            <form method="POST" action="{{ url('/admin/login') }}">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <input id="email" type="email" name="email" class="form-control form-control-lg" id="username"
+                           type="text" placeholder="Username"
+                           autocomplete="off" value="{{ old('email') }}" autofocus>
+                    @if ($errors->has('email'))
+                        <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
+                    @endif
+                </div>
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                    <input name="password" class="form-control form-control-lg" id="password" type="password"
+                           placeholder="Password">
+                    @if ($errors->has('password'))
+                        <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/admin/password/reset') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+                    @endif
                 </div>
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+            </form>
+        </div>
+        <div class="card-footer bg-white p-0  ">
+            <div class="card-footer-item card-footer-item-bordered">
+                <a href="#" class="footer-link">Create An Account</a></div>
+            <div class="card-footer-item card-footer-item-bordered">
+                <a href="#" class="footer-link">Forgot Password</a>
             </div>
         </div>
     </div>
 </div>
-@endsection
+
+<script src="{{ asset('asset/admin/vendor/jquery/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('asset/admin/vendor/bootstrap/js/bootstrap.bundle.js')}}"></script>
+</body>
+
+</html>

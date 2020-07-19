@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/customer/home';
+    protected $redirectTo = '/customer_temp/home';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('customer.guest');
+        $this->middleware('customer_temp.guest');
     }
 
     /**
@@ -77,7 +77,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('customer.auth.register');
+        return view('customer_temp.auth.register');
     }
 
     /**
@@ -87,6 +87,6 @@ class RegisterController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard('customer');
+        return Auth::guard('customer_temp');
     }
 }

@@ -15,10 +15,10 @@ class RedirectIfNotCustomer
 	 * @param  string|null  $guard
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next, $guard = 'customer')
+	public function handle($request, Closure $next, $guard = 'customer_temp')
 	{
 	    if (!Auth::guard($guard)->check()) {
-	        return redirect('customer/login');
+	        return redirect('customer_temp/login');
 	    }
 
 	    return $next($request);

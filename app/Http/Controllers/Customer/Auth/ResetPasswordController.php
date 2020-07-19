@@ -28,7 +28,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    public $redirectTo = '/customer/home';
+    public $redirectTo = '/customer_temp/home';
 
 
     /**
@@ -38,7 +38,7 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('customer.guest');
+        $this->middleware('customer_temp.guest');
     }
 
     /**
@@ -52,7 +52,7 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('customer.auth.passwords.reset')->with(
+        return view('customer_temp.auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
@@ -74,6 +74,6 @@ class ResetPasswordController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard('customer');
+        return Auth::guard('customer_temp');
     }
 }

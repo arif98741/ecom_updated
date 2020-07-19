@@ -53,8 +53,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'customer' => \App\Http\Middleware\RedirectIfNotCustomer::class,
-        'customer.guest' => \App\Http\Middleware\RedirectIfCustomer::class,
+        'customer_temp' => \App\Http\Middleware\RedirectIfNotCustomer::class,
+        'customer_temp.guest' => \App\Http\Middleware\RedirectIfCustomer::class,
         'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'admin.guest' => \App\Http\Middleware\RedirectIfAdmin::class,
         'auth' => \App\Http\Middleware\Authenticate::class,

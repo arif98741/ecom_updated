@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    public $redirectTo = '/customer/home';
+    public $redirectTo = '/customer_temp/home';
 
     /**
      * Create a new controller instance.
@@ -38,7 +38,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('customer.guest', ['except' => 'logout']);
+        $this->middleware('customer_temp.guest', ['except' => 'logout']);
     }
 
     /**
@@ -48,7 +48,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('customer.auth.login');
+        return view('customer_temp.auth.login');
     }
 
     /**
@@ -58,6 +58,6 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard('customer');
+        return Auth::guard('customer_temp');
     }
 }

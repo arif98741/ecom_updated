@@ -16,4 +16,4 @@ yarn-error.log
 *.zip
 *.iml
 *.log
-
+template/admin
