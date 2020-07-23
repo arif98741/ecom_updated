@@ -14,18 +14,22 @@ class CreateSubCategoriesTable extends Migration
     public function up()
     {
         Schema::create('sub_categories', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('sub_category_name');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')
+                ->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()
     {
         Schema::dropIfExists('sub_categories');
+        Schema::dropForeing('category_id');
     }
 }

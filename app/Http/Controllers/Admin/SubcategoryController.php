@@ -3,83 +3,136 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Session;
 
 class SubcategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * view sub category list
+     * @return Factory|View
      */
     public function index()
     {
-        //
+        $data = [
+            'sub_categories' => SubCategory::with(['category'])
+                ->get()
+        ];
+
+        return view('admin.sub-category.index')->with($data);
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * show category save form
+     * @return Factory|View
      */
     public function create()
     {
-        //
+        $data = [
+            'categories' => Category::orderBy('category_name')->get()
+        ];
+        return view('admin.sub-category.create')->with($data);
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * save category data in database
+     * @param Request $request
+     * @return RedirectResponse|Redirector
      */
     public function store(Request $request)
     {
-        //
+        $subcategoryData = $this->validateRequest();
+        if (SubCategory::create($subcategoryData)) {
+            Session::flash('success', 'SubCategory Added successfully!');
+            return redirect(route('admin.sub-category.index'));
+        } else {
+            Session::flash('error', 'Failed to save sub category!');
+            return redirect(route('admin.sub-category.create'));
+        }
+
+    }
+
+
+    /**
+     * edit individual sub category
+     * @param SubCategory $sub_category
+     * @return Restaurant
+     */
+    public function edit(SubCategory $sub_category)
+    {
+        $data = [
+            'sub_category' => $sub_category,
+            'categories' => Category::orderBy('category_name')->get()
+        ];
+
+        return view('admin.sub-category.edit')->with($data);
+    }
+
+
+    /**
+     * update sub category
+     * @param Request $request
+     * @param SubCategory $sub -category
+     * @return RedirectResponse|Redirector
+     */
+    public
+    function update(Request $request, SubCategory $sub_category)
+    {
+        $validatedData = $this->updateValidateRequest();
+
+        if ($category->update($validatedData)) {
+            Session::flash('success', 'SubCategory Updated successfully!');
+            return redirect(route('admin.sub-category.index'));
+        } else {
+            Session::flash('error', 'Failed to update sub category!');
+            return redirect(route('admin.sub-category.create'));
+        }
+    }
+
+
+    /**
+     * delete restaurant individually
+     * @param SubCategory $sub -category
+     * @return RedirectResponse|Redirector
+     * @throws \Exception
+     */
+    public function destroy(SubCategory $sub_category)
+    {
+        if ($category->delete()) {
+
+            Session::flash('success', 'SubCategory deleted successfully!');
+            return redirect(route('admin.sub-category.index'));
+        } else {
+            Session::flash('error', 'Failed to delete food!');
+            return redirect(route('admin.food.index'));
+        }
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * validation data
+     * @return array
      */
-    public function show($id)
+    private function validateRequest()
     {
-        //
+        return request()->validate([
+            'sub_category_name' => 'required|unique:sub_categories|min:3',
+            'category_id' => 'required',
+        ]);
+
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * update validation data
+     * @return array
      */
-    public function edit($id)
+    private function updateValidateRequest()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return request()->validate([
+            'sub_category_name' => 'min:3|max:100',
+        ]);
     }
 }
