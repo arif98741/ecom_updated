@@ -1,5 +1,5 @@
 @extends('layout.admin.admin')
-@section('title','Sub Category List')
+@section('title','Brand List')
 @section('content')
     <div class="container-fluid dashboard-content ">
         <div class="row">
@@ -11,7 +11,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"
                                                                class="breadcrumb-link">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Sub Category List
+                                <li class="breadcrumb-item active" aria-current="page">Brand List
                                 </li>
                             </ol>
                         </nav>
@@ -31,36 +31,38 @@
                 @endif
                 <div class="card">
 
-                    <h5 class="card-header">Sub Categories Table</h5>
+                    <h5 class="card-header">Categories Table</h5>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered first" id="dataTable">
                                 <thead>
                                 <tr>
                                     <th>SL</th>
-                                    <th>Sub Category Name</th>
-                                    <th>Category Name</th>
+                                    <th>Brand Name</th>
+                                    <th>Address</th>
+                                    <th>Mobile</th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($sub_categories as $key=> $sub_category)
+                                @foreach($brands as $key=> $brand)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $sub_category->sub_category_name }}</td>
-                                        <td>{{ $sub_category->category->category_name }}</td>
-                                        <td>12-12-2020</td>
+                                        <td>{{ $brand->brand_name }}</td>
+                                        <td>{{ $brand->address }}</td>
+                                        <td>{{ $brand->mobile }}</td>
+                                        <td>{{ date('d-m-Y',strtotime($brand->created_at)) }}</td>
                                         <td>
-                                            <a href="{{ route('admin.sub-category.edit',$sub_category->id) }}"
+                                            <a href="{{ route('admin.brand.edit',$brand->id) }}"
                                                class="btn btn-sm btn-primary text-white">Edit</a>
-                                            <a href="{{ route('admin.sub-category.destroy',$sub_category->id) }}"
+                                            <a href="{{ route('admin.brand.destroy',$brand->id) }}"
                                                onclick="event.preventDefault();
-                                                   document.getElementById('vendor-delete-form{{ $sub_category->id }}').submit();"
+                                                   document.getElementById('vendor-delete-form{{ $brand->id }}').submit();"
                                                class="btn btn-sm btn-warning text-white">Delete</a>
-                                            <form id="vendor-delete-form{{ $sub_category->id }}"
+                                            <form id="vendor-delete-form{{ $brand->id }}"
                                                   onclick="return(confirm('are you sure to delete?'))"
-                                                  action="{{ route('admin.sub-category.destroy',$sub_category->id) }}"
+                                                  action="{{ route('admin.brand.destroy',$brand->id) }}"
                                                   method="post" style="display: none;">
                                                 {{ csrf_field() }} @method('DELETE')
                                             </form>

@@ -35,7 +35,9 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Category Name</label>
-                                        <input id="inputText3" name="category_name" value="{{ (!empty(old('category_name'))) ? old('category_name'): '' }}" type="text" class="form-control">
+                                        <input id="inputText3" name="category_name"
+                                               value="{{ (!empty(old('category_name'))) ? old('category_name'): '' }}"
+                                               type="text" class="form-control">
                                         @error('category_name')
                                         <p class="text-red mt-1">{{ $message }}</p>
                                         @enderror

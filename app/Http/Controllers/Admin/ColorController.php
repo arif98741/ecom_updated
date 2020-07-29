@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Color;
 use Exception;
 use Illuminate\Http\Request;
 use Session;
 
-class CategoryController extends Controller
+class ColorController extends Controller
 {
     /**
      * view places list
@@ -17,10 +17,10 @@ class CategoryController extends Controller
     public function index()
     {
         $data = [
-            'categories' => Category::orderBy('category_name')->get()
+            'colors' => Color::orderBy('color_name')->get()
         ];
 
-        return view('admin.category.index')->with($data);
+        return view('admin.color.index')->with($data);
     }
 
 
@@ -33,7 +33,7 @@ class CategoryController extends Controller
         $data = [
 
         ];
-        return view('admin.category.create')->with($data);
+        return view('admin.color.create')->with($data);
     }
 
 
@@ -44,13 +44,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $categoryData = $this->validateRequest();
-        if (Category::create($categoryData)) {
-            Session::flash('success', 'Category Added successfully!');
-            return redirect(route('admin.category.index'));
+        $colorData = $this->validateRequest();
+        if (Color::create($colorData)) {
+            Session::flash('success', 'Color Added successfully!');
+            return redirect(route('admin.color.index'));
         } else {
             Session::flash('error', 'Failed to save place!');
-            return redirect(route('admin.category.create'));
+            return redirect(route('admin.color.create'));
         }
 
     }
@@ -62,41 +62,41 @@ class CategoryController extends Controller
     private function validateRequest()
     {
         return request()->validate([
-            'category_name' => 'required|unique:categories|min:3',
+            'color_name' => 'required|unique:colors|min:3',
         ]);
 
     }
 
     /**
      * edit individual place
-     * @param Category $category
+     * @param Color $color
      * @return Restaurant
      */
-    public function edit(Category $category)
+    public function edit(Color $color)
     {
         $data = [
-            'category' => $category,
+            'color' => $color,
         ];
 
-        return view('admin.category.edit')->with($data);
+        return view('admin.color.edit')->with($data);
     }
 
     /**
      * update place
      * @param Request $request
-     * @param Category $category
+     * @param Color $color
      * @return RedirectResponse|Redirector
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Color $color)
     {
         $validatedData = $this->updateValidateRequest();
 
-        if ($category->update($validatedData)) {
-            Session::flash('success', 'Category Updated successfully!');
-            return redirect(route('admin.category.index'));
+        if ($color->update($validatedData)) {
+            Session::flash('success', 'Color Updated successfully!');
+            return redirect(route('admin.color.index'));
         } else {
             Session::flash('error', 'Failed to update place!');
-            return redirect(route('admin.category.create'));
+            return redirect(route('admin.color.create'));
         }
     }
 
@@ -107,22 +107,22 @@ class CategoryController extends Controller
     private function updateValidateRequest()
     {
         return request()->validate([
-            'category_name' => 'min:3|max:100',
+            'color_name' => 'min:3|max:100',
         ]);
     }
 
     /**
      * delete restaurant individually
-     * @param Category $category
+     * @param Color $color
      * @return RedirectResponse|Redirector
      * @throws Exception
      */
-    public function destroy(Category $category)
+    public function destroy(Color $color)
     {
-        if ($category->delete()) {
+        if ($color->delete()) {
 
-            Session::flash('success', 'Category deleted successfully!');
-            return redirect(route('admin.category.index'));
+            Session::flash('success', 'Color deleted successfully!');
+            return redirect(route('admin.color.index'));
         } else {
             Session::flash('error', 'Failed to delete food!');
             return redirect(route('admin.food.index'));

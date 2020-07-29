@@ -14,7 +14,8 @@ class CreateColorsTable extends Migration
     public function up()
     {
         Schema::create('colors', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('color_name');
             $table->timestamps();
         });
     }

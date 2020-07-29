@@ -16,9 +16,9 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('product_name');
-            $table->integer('category_id')->unsigned();
-            $table->integer('brand_id')->unsigned();
-            $table->integer('color_id')->unsigned();
+            $table->integer('category_id')->unsigned()->nullable();
+            $table->integer('brand_id')->unsigned()->nullable();
+            $table->integer('color_id')->unsigned()->nullable();
             $table->string('model');
             $table->double('price', 10, 2);
             $table->double('sale_price', 10, 2);
@@ -30,13 +30,10 @@ class CreateProductsTable extends Migration
             $table->string('fea_image6')->nullable();
             $table->string('fea_image7')->nullable();
             $table->longText('description');
-            $table->string('featured')->nullable();
-            $table->string('new_arrival')->nullable();
-            $table->string('hot_deals')->nullable();
             $table->string('offer')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
-            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('set null')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onUpdate('set null')->onDelete('cascade');
+            $table->foreign('color_id')->references('id')->on('colors')->onUpdate('set null')->onDelete('cascade');
             $table->timestamps();
         });
     }

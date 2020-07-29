@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Exception;
 use Illuminate\Http\Request;
 use Session;
 
@@ -56,6 +57,18 @@ class SubcategoryController extends Controller
 
     }
 
+    /**
+     * validation data
+     * @return array
+     */
+    private function validateRequest()
+    {
+        return request()->validate([
+            'sub_category_name' => 'required|unique:sub_categories|min:3',
+            'category_id' => 'required',
+        ]);
+
+    }
 
     /**
      * edit individual sub category
@@ -72,11 +85,10 @@ class SubcategoryController extends Controller
         return view('admin.sub-category.edit')->with($data);
     }
 
-
     /**
      * update sub category
      * @param Request $request
-     * @param SubCategory $sub -category
+     * @param SubCategory $sub_category
      * @return RedirectResponse|Redirector
      */
     public
@@ -84,45 +96,13 @@ class SubcategoryController extends Controller
     {
         $validatedData = $this->updateValidateRequest();
 
-        if ($category->update($validatedData)) {
+        if ($sub_category->update($validatedData)) {
             Session::flash('success', 'SubCategory Updated successfully!');
             return redirect(route('admin.sub-category.index'));
         } else {
             Session::flash('error', 'Failed to update sub category!');
             return redirect(route('admin.sub-category.create'));
         }
-    }
-
-
-    /**
-     * delete restaurant individually
-     * @param SubCategory $sub -category
-     * @return RedirectResponse|Redirector
-     * @throws \Exception
-     */
-    public function destroy(SubCategory $sub_category)
-    {
-        if ($category->delete()) {
-
-            Session::flash('success', 'SubCategory deleted successfully!');
-            return redirect(route('admin.sub-category.index'));
-        } else {
-            Session::flash('error', 'Failed to delete food!');
-            return redirect(route('admin.food.index'));
-        }
-    }
-
-    /**
-     * validation data
-     * @return array
-     */
-    private function validateRequest()
-    {
-        return request()->validate([
-            'sub_category_name' => 'required|unique:sub_categories|min:3',
-            'category_id' => 'required',
-        ]);
-
     }
 
     /**
@@ -133,6 +113,25 @@ class SubcategoryController extends Controller
     {
         return request()->validate([
             'sub_category_name' => 'min:3|max:100',
+            'category_id' => 'required'
         ]);
+    }
+
+    /**
+     * delete restaurant individually
+     * @param SubCategory $sub_category
+     * @return RedirectResponse|Redirector
+     * @throws Exception
+     */
+    public function destroy(SubCategory $sub_category)
+    {
+        if ($sub_category->delete()) {
+
+            Session::flash('success', 'SubCategory deleted successfully!');
+            return redirect(route('admin.sub-category.index'));
+        } else {
+            Session::flash('error', 'Failed to delete food!');
+            return redirect(route('admin.food.index'));
+        }
     }
 }

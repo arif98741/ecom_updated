@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Support\Renderable;
 use Auth;
+use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {

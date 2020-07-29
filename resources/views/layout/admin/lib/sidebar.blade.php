@@ -49,6 +49,19 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                           data-target="#submenu-order" aria-controls="submenu-order"><i
+                                class="fas fa-fw fa-list"></i>Order</a>
+                        <div id="submenu-order" class="collapse submenu" style="">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.order.index') }}">Order List</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
                            data-target="#submenu-category" aria-controls="submenu-category"><i
                                 class="fas fa-fw fa-list"></i>Category</a>
                         <div id="submenu-category" class="collapse submenu" style="">
@@ -72,17 +85,37 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
-                           data-target="#submenu-order" aria-controls="submenu-order"><i
-                                class="fas fa-fw fa-list"></i>Order</a>
-                        <div id="submenu-order" class="collapse submenu" style="">
+                           data-target="#submenu-brand" aria-controls="submenu-brand"><i
+                                class="fas fa-fw fa-list"></i>Brand</a>
+                        <div id="submenu-brand" class="collapse submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.order.index') }}">Order List</a>
+                                    <a class="nav-link" href="{{ route('admin.brand.index') }}">Brand List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.brand.create') }}">Add Brand</a>
                                 </li>
 
                             </ul>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                           data-target="#submenu-color" aria-controls="submenu-color"><i
+                                class="fas fa-fw fa-list"></i>Color</a>
+                        <div id="submenu-color" class="collapse submenu" style="">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.color.index') }}">Color List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.color.create') }}">Add Color</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
 
                 </ul>
             </div>

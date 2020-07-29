@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Brand;
 use Exception;
 use Illuminate\Http\Request;
 use Session;
 
-class CategoryController extends Controller
+class BrandController extends Controller
 {
     /**
      * view places list
@@ -17,10 +17,10 @@ class CategoryController extends Controller
     public function index()
     {
         $data = [
-            'categories' => Category::orderBy('category_name')->get()
+            'brands' => Brand::orderBy('brand_name')->get()
         ];
 
-        return view('admin.category.index')->with($data);
+        return view('admin.brand.index')->with($data);
     }
 
 
@@ -33,7 +33,7 @@ class CategoryController extends Controller
         $data = [
 
         ];
-        return view('admin.category.create')->with($data);
+        return view('admin.brand.create')->with($data);
     }
 
 
@@ -44,13 +44,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $categoryData = $this->validateRequest();
-        if (Category::create($categoryData)) {
-            Session::flash('success', 'Category Added successfully!');
-            return redirect(route('admin.category.index'));
+        $brandData = $this->validateRequest();
+
+        if (Brand::create($brandData)) {
+            Session::flash('success', 'Brand Added successfully!');
+            return redirect(route('admin.brand.index'));
         } else {
             Session::flash('error', 'Failed to save place!');
-            return redirect(route('admin.category.create'));
+            return redirect(route('admin.brand.create'));
         }
 
     }
@@ -62,41 +63,43 @@ class CategoryController extends Controller
     private function validateRequest()
     {
         return request()->validate([
-            'category_name' => 'required|unique:categories|min:3',
+            'brand_name' => 'required|unique:brands|min:2',
+            'address' => 'sometimes',
+            'mobile' => 'sometimes',
         ]);
 
     }
 
     /**
      * edit individual place
-     * @param Category $category
+     * @param Brand $brand
      * @return Restaurant
      */
-    public function edit(Category $category)
+    public function edit(Brand $brand)
     {
         $data = [
-            'category' => $category,
+            'brand' => $brand,
         ];
 
-        return view('admin.category.edit')->with($data);
+        return view('admin.brand.edit')->with($data);
     }
 
     /**
      * update place
      * @param Request $request
-     * @param Category $category
+     * @param Brand $brand
      * @return RedirectResponse|Redirector
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Brand $brand)
     {
         $validatedData = $this->updateValidateRequest();
 
-        if ($category->update($validatedData)) {
-            Session::flash('success', 'Category Updated successfully!');
-            return redirect(route('admin.category.index'));
+        if ($brand->update($validatedData)) {
+            Session::flash('success', 'Brand Updated successfully!');
+            return redirect(route('admin.brand.index'));
         } else {
             Session::flash('error', 'Failed to update place!');
-            return redirect(route('admin.category.create'));
+            return redirect(route('admin.brand.create'));
         }
     }
 
@@ -107,22 +110,24 @@ class CategoryController extends Controller
     private function updateValidateRequest()
     {
         return request()->validate([
-            'category_name' => 'min:3|max:100',
+            'brand_name' => 'min:3|max:100',
+            'address' => 'sometimes',
+            'mobile' => 'sometimes',
         ]);
     }
 
     /**
      * delete restaurant individually
-     * @param Category $category
+     * @param Brand $brand
      * @return RedirectResponse|Redirector
      * @throws Exception
      */
-    public function destroy(Category $category)
+    public function destroy(Brand $brand)
     {
-        if ($category->delete()) {
+        if ($brand->delete()) {
 
-            Session::flash('success', 'Category deleted successfully!');
-            return redirect(route('admin.category.index'));
+            Session::flash('success', 'Brand deleted successfully!');
+            return redirect(route('admin.brand.index'));
         } else {
             Session::flash('error', 'Failed to delete food!');
             return redirect(route('admin.food.index'));
