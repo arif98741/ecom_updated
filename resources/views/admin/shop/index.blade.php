@@ -1,5 +1,5 @@
 @extends('layout.admin.admin')
-@section('title','Product List')
+@section('title','Shop List')
 @section('content')
     <div class="container-fluid dashboard-content ">
         <div class="row">
@@ -11,7 +11,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"
                                                                class="breadcrumb-link">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Product List
+                                <li class="breadcrumb-item active" aria-current="page">Shop List
                                 </li>
                             </ol>
                         </nav>
@@ -31,50 +31,34 @@
                 @endif
                 <div class="card">
 
-                    <h5 class="card-header">Products Table</h5>
+                    <h5 class="card-header">Colors Table</h5>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered first" id="dataTable">
                                 <thead>
                                 <tr>
                                     <th>SL</th>
-                                    <th>Product Name</th>
-                                    <th>Shop</th>
-                                    <th>Category</th>
-                                    <th>Brand</th>
-                                    <th>Color</th>
-                                    <th>Price</th>
-                                    <th>Sale Price</th>
-                                    <th>Photo</th>
+                                    <th>Shop Name</th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($products as $key=> $product)
+                                @foreach($shops as $key=> $shop)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $product->product_name }}</td>
-                                        <td>{{ $product->shop->name }}</td>
-                                        <td>{{ $product->category->category_name }}</td>
-                                        <td>{{ $product->brand->brand_name }}</td>
-                                        <td>{{ $product->color->color_name }}</td>
-                                        <td>{{ $product->price }}</td>
-                                        <td>{{ $product->sale_price }}</td>
-                                        <td> <img style="width:80px; height: 60px;"
-                                                      src="{{ asset('uploads/product/thumbnail/'.$product->fea_image1) }}">
-                                        </td>
-                                        <td>{{ date('d-m-Y',strtotime($product->created_at)) }}</td>
+                                        <td>{{ $shop->name }}</td>
+                                        <td>{{ date('d-m-Y',strtotime($shop->created_at)) }}</td>
                                         <td>
-                                            <a href="{{ route('admin.product.edit',$product->id) }}"
-                                               class="btn btn-sm btn-primary text-white">Edit</a>
-                                            <a href="{{ route('admin.product.destroy',$product->id) }}"
+{{--                                            <a href="{{ route('admin.shop.edit',$shop->id) }}"--}}
+{{--                                               class="btn btn-sm btn-primary text-white">Edit</a>--}}
+                                            <a href="{{ route('admin.shop.destroy',$shop->id) }}"
                                                onclick="event.preventDefault();
-                                                   document.getElementById('vendor-delete-form{{ $product->id }}').submit();"
+                                                   document.getElementById('vendor-delete-form{{ $shop->id }}').submit();"
                                                class="btn btn-sm btn-warning text-white">Delete</a>
-                                            <form id="vendor-delete-form{{ $product->id }}"
+                                            <form id="vendor-delete-form{{ $shop->id }}"
                                                   onclick="return(confirm('are you sure to delete?'))"
-                                                  action="{{ route('admin.product.destroy',$product->id) }}"
+                                                  action="{{ route('admin.shop.destroy',$shop->id) }}"
                                                   method="post" style="display: none;">
                                                 {{ csrf_field() }} @method('DELETE')
                                             </form>

@@ -79,13 +79,13 @@
                         <h5 class="contact-title footer-title">Contact Us</h5>
                         <ul class="ul-wrapper">
                             <li><i class="fa fa-map-marker"></i><span class="location2">Offices Addresss:<br>
-                218,Drimlend Building<br>
-                Sarthana jakatnaka, Surat City <br>
-                Gujarat-395013  INDIA</span></li>
+                121-Kazi Nazrul Islam Avenue<br>
+                Dhaka <br>
+                Bangladesh</span></li>
                             <li><i class="fa fa-envelope"></i><span class="mail2"><a href="#">info@localhost.com</a><br>
                 <a href="#">your@domain.com</a></span></li>
-                            <li><i class="fa fa-mobile"></i><span class="phone2">+91 0987-654-321<br>
-                +91 0987-654-321</span></li>
+                            <li><i class="fa fa-mobile"></i><span class="phone2">+01xxxxxxxx<br>
+                +01XXXXXXX</span></li>
                         </ul>
                     </div>
                 </div>

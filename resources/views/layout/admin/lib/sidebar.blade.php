@@ -115,6 +115,22 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                           data-target="#submenu-shop" aria-controls="submenu-shop"><i
+                                class="fas fa-fw fa-university"></i>Shop</a>
+                        <div id="submenu-shop" class="collapse submenu" style="">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.shop.index') }}">Shop List</a>
+                                </li>
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link" href="{{ route('admin.shop.create') }}">Add Color</a>--}}
+{{--                                </li>--}}
+
+                            </ul>
+                        </div>
+                    </li>
 
 
                 </ul>

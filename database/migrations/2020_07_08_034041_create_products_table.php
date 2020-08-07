@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('product_name');
+            $table->integer('shop_id')->unsigned()->nullable();
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('brand_id')->unsigned()->nullable();
             $table->integer('color_id')->unsigned()->nullable();
@@ -31,6 +32,7 @@ class CreateProductsTable extends Migration
             $table->string('fea_image7')->nullable();
             $table->longText('description');
             $table->string('offer')->nullable();
+            $table->foreign('shop_id')->references('id')->on('shops')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('set null')->onDelete('cascade');
             $table->foreign('brand_id')->references('id')->on('brands')->onUpdate('set null')->onDelete('cascade');
             $table->foreign('color_id')->references('id')->on('colors')->onUpdate('set null')->onDelete('cascade');

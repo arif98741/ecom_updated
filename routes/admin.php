@@ -7,6 +7,7 @@ Route::namespace('Admin')->group(function () {
     Route::resource('brand', 'BrandController')->except('show');
     Route::resource('color', 'ColorController')->except('show');
     Route::resource('product', 'ProductController')->except('show');
+    Route::resource('shop', 'ShopController')->except('show', 'create');
     Route::resource('customer', 'CustomerController')->except('show');
     Route::resource('order', 'OrderController')->except('show', 'create');
     Route::resource('page', 'PageController')->except('show', 'create');

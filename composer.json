@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "spatie/laravel-permission": "^3.13",
-        "alaminfirdows/laravel-multi-auth": "^0.0.1@alpha"
+        "alaminfirdows/laravel-multi-auth": "^0.0.1@alpha",
+        "intervention/image": "^2.5"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

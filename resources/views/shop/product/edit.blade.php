@@ -1,4 +1,4 @@
-@extends('layout.admin.admin')
+@extends('layout.shop.shop')
 @section('title','Edit Product')
 @section('content')
     <div class="container-fluid dashboard-content ">

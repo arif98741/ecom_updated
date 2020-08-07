@@ -28,7 +28,7 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <form action="{{ route('admin.product.store') }}" method="post">
+                        <form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('post')
                             <div class="row">
@@ -45,6 +45,20 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="inputText3" class="col-form-label">Shop</label>
+                                        <select class="form-control" name="shop_id">
+                                            <option selected disabled>Select Shop</option>
+                                            @foreach( $shops as $shop)
+                                                <option
+                                                    value="{{ $shop->id }}" {{  !empty(old('shop_id')) ? 'selected': ''}} >{{ $shop->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('shop_id')
+                                        <p class="text-red mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Category Name</label>
                                         <select class="form-control" id="category_dropdown" name="category_id">
                                             <option selected disabled>Select Category</option>
@@ -59,18 +73,36 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="inputText3" class="col-form-label">Sub Category Name</label>
-                                        <select class="form-control" id="sub_category_dropdown" name="sub_category_id">
-                                            <option selected disabled>Select Category</option>
 
-                                        </select>
-                                        @error('sub_category_name')
+                                    <div class="form-group">
+                                        <label for="inputText3" class="col-form-label">Price</label>
+                                        <input name="price"
+                                               value="{{ (!empty(old('price'))) ? old('price'): '' }}"
+                                               type="text" class="form-control">
+                                        @error('price')
                                         <p class="text-red mt-1">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputText3" class="col-form-label">Sale Price</label>
+                                        <input name="sale_price"
+                                               value="{{ (!empty(old('sale_price'))) ? old('sale_price'): '' }}"
+                                               type="text" class="form-control">
+                                        @error('sale_price')
+                                        <p class="text-red mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputText3" class="col-form-label">Model</label>
+                                        <input name="model"
+                                               value="{{ (!empty(old('model'))) ? old('model'): '' }}"
+                                               type="text" class="form-control">
+                                        @error('model')
+                                        <p class="text-red mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="inputText3" class="col-form-label">Brand</label>
@@ -101,18 +133,27 @@
                                         @enderror
                                     </div>
 
+
+                                </div>
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="inputText3" class="col-form-label">Sub Category Name</label>
-                                        <input name="sub_category_name"
-                                               value="{{ (!empty(old('sub_category_name'))) ? old('sub_category_name'): '' }}"
-                                               type="text" class="form-control">
-                                        @error('sub_category_name')
+                                        <label for="inputText3" class="col-form-label">Feature Image</label>
+                                        <input type="file" name="fea_image1" class="form-control">
+                                        @error('fea_image1')
                                         <p class="text-red mt-1">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
-
-
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputText3" class="col-form-label">Description</label>
+                                        <textarea class="form-control"
+                                                  name="description">{{ (!empty(old('description'))) ? old('description'): '' }}</textarea>
+                                        @error('description')
+                                        <p class="text-red mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
 
                                     <button type="submit" class="btn btn-primary btn-btn-sm">Save</button>
@@ -148,10 +189,12 @@
                                 $.each(response.data, function (key, value) {
                                     console.log(value);
 
-                                    $('#sub_category_dropdown')
+                                    /*$('#sub_category_dropdown')
                                         .append($("<option></option>")
                                             .attr("value", value.id)
                                             .text(value.sub_category_name));
+
+                                     */
 
                                 });
 

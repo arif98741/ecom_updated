@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\Shop;
+use App\Providers\AuthData;
 use App\Providers\MyHelperProvider;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -22,12 +23,14 @@ class ProductController extends Controller
      */
     public function index()
     {
+
         $data = [
             'products' => Product::with(['category', 'shop', 'brand', 'color'])
+                ->where('shop_id', AuthData::userId('shop'))
                 ->orderBy('product_name', 'asc')
                 ->get()
         ];
-        return view('admin.product.index')->with($data);
+        return view('shop.product.index')->with($data);
     }
 
     /**
@@ -44,7 +47,7 @@ class ProductController extends Controller
             'colors' => Color::orderBy('color_name', 'asc')->get(),
         ];
 
-        return view('admin.product.create')->with($data);
+        return view('shop.product.create')->with($data);
     }
 
     /**
@@ -57,6 +60,7 @@ class ProductController extends Controller
     {
 //        dd($request->all());
         $productData = $this->validateRequest();
+        $productData['shop_id'] = AuthData::userId('shop');
         if (!empty($request->file('fea_image1'))) {
             $image = MyHelperProvider::imageUpload($request, 'fea_image1', 'product/');
             $productData['fea_image1'] = $image['file_name'];
@@ -64,10 +68,10 @@ class ProductController extends Controller
 
         if (Product::create($productData)) {
             Session::flash('success', 'Product Added successfully!');
-            return redirect(route('admin.product.index'));
+            return redirect(route('shop.product.index'));
         } else {
             Session::flash('error', 'Failed to save place!');
-            return redirect(route('admin.product.create'));
+            return redirect(route('shop.product.create'));
         }
     }
 
@@ -97,7 +101,7 @@ class ProductController extends Controller
             'brands' => Brand::orderBy('brand_name', 'asc')->get(),
             'colors' => Color::orderBy('color_name', 'asc')->get(),
         ];
-        return view('admin.product.edit')->with($data);
+        return view('shop.product.edit')->with($data);
     }
 
     /**
@@ -128,10 +132,10 @@ class ProductController extends Controller
 
         if ($product->update($validatedData)) {
             Session::flash('success', 'Product Updated successfully!');
-            return redirect(route('admin.product.index'));
+            return redirect(route('shop.product.index'));
         } else {
             Session::flash('error', 'Failed to update product!');
-            return redirect(route('admin.product.create'));
+            return redirect(route('shop.product.create'));
 
         }
     }
@@ -147,18 +151,18 @@ class ProductController extends Controller
         if ($product->delete()) {
 
             Session::flash('success', 'Product deleted successfully!');
-            return redirect(route('admin.product.index'));
+            return redirect(route('shop.product.index'));
         } else {
             Session::flash('error', 'Failed to delete product!');
-            return redirect(route('admin.product.index'));
+            return redirect(route('shop.product.index'));
         }
     }
+
 
     private function validateRequest()
     {
         return request()->validate([
             'product_name' => 'required|min:3',
-            'shop_id' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
             'color_id' => 'required',
@@ -173,7 +177,6 @@ class ProductController extends Controller
     {
         return request()->validate([
             'product_name' => 'required|min:3',
-            'shop_id' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
             'color_id' => 'required',

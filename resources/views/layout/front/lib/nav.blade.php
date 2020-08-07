@@ -5,10 +5,10 @@
         </div>
         <div class="navbar-collapse">
             <ul class="main-navigation">
-                <li><a href="index-2.html" class="parent">Home</a></li>
-                <li><a href="category.html" class="parent">Collection</a></li>
-                <li><a href="category.html" class="parent">Women</a></li>
-                <li><a href="category.html" class="parent">Men</a></li>
+                <li><a href="{{ url('/') }}" class="parent">Home</a></li>
+                <li><a href="#" class="parent">Collection</a></li>
+                <li><a href="#" class="parent">Women</a></li>
+                <li><a href="#" class="parent">Men</a></li>
                 <li><a href="#" class="active parent">Page</a>
                     <ul>
                         <li><a href="category.html">Category Page</a></li>

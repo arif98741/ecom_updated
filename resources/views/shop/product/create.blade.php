@@ -1,5 +1,5 @@
-@extends('layout.admin.admin')
-@section('title','Edit Product')
+@extends('layout.shop.shop')
+@section('title','Add Product')
 @section('content')
     <div class="container-fluid dashboard-content ">
         <div class="row">
@@ -12,7 +12,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"
                                                                class="breadcrumb-link">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Edit Product
+                                <li class="breadcrumb-item active" aria-current="page">Add Product
                                 </li>
                             </ol>
                         </nav>
@@ -23,49 +23,35 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="section-block" id="basicform" tabindex="-1">
-                    {{--                    <h3 class="section-title">Edit Product</h3>--}}
+                    {{--                    <h3 class="section-title">Add Product</h3>--}}
                 </div>
                 <div class="card">
 
                     <div class="card-body">
-                        <form action="{{ route('admin.product.update',$product->id) }}" method="post"
-                              enctype="multipart/form-data">
+                        <form action="{{ route('shop.product.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            @method('put')
+                            @method('post')
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="inputText3" class="col-form-label">Product Name</label>
                                             <input name="product_name"
-                                                   value="{{ (!empty(old('product_name'))) ? old('product_name'): $product->product_name }}"
+                                                   value="{{ (!empty(old('product_name'))) ? old('product_name'): '' }}"
                                                    type="text" class="form-control">
                                             @error('product_name')
                                             <p class="text-red mt-1">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputText3" class="col-form-label">Shop</label>
-                                        <select class="form-control" name="shop_id">
-                                            <option selected disabled>Select Shop</option>
-                                            @foreach( $shops as $shop)
-                                                <option
-                                                    value="{{ $shop->id }}" {{  ($shop->id == $product->shop_id) ? 'selected': ''}} >{{ $shop->name }}</option>
-                                            @endforeach
-                                        </select>
 
-                                        @error('shop_id')
-                                        <p class="text-red mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Category Name</label>
                                         <select class="form-control" id="category_dropdown" name="category_id">
                                             <option selected disabled>Select Category</option>
                                             @foreach( $categories as $category)
                                                 <option
-                                                    value="{{ $category->id }}" {{  ($category->id == $shop->category_id) ? 'selected': ''}} >{{ $category->category_name }}</option>
+                                                    value="{{ $category->id }}" {{  !empty(old('category_id')) ? 'selected': ''}} >{{ $category->category_name }}</option>
                                             @endforeach
                                         </select>
 
@@ -78,7 +64,7 @@
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Price</label>
                                         <input name="price"
-                                               value="{{ (!empty(old('price'))) ? old('price'): $product->price }}"
+                                               value="{{ (!empty(old('price'))) ? old('price'): '' }}"
                                                type="text" class="form-control">
                                         @error('price')
                                         <p class="text-red mt-1">{{ $message }}</p>
@@ -89,7 +75,7 @@
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Sale Price</label>
                                         <input name="sale_price"
-                                               value="{{ (!empty(old('sale_price'))) ? old('sale_price'): $product->sale_price }}"
+                                               value="{{ (!empty(old('sale_price'))) ? old('sale_price'): '' }}"
                                                type="text" class="form-control">
                                         @error('sale_price')
                                         <p class="text-red mt-1">{{ $message }}</p>
@@ -98,7 +84,7 @@
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Model</label>
                                         <input name="model"
-                                               value="{{ (!empty(old('model'))) ? old('model'): $product->model }}"
+                                               value="{{ (!empty(old('model'))) ? old('model'): '' }}"
                                                type="text" class="form-control">
                                         @error('model')
                                         <p class="text-red mt-1">{{ $message }}</p>
@@ -111,7 +97,7 @@
                                                 <option selected disabled>Select Brand</option>
                                                 @foreach( $brands as $brand)
                                                     <option
-                                                        value="{{ $brand->id }}" {{  ($product->brand_id == $brand->id) ? 'selected': ''}} >{{ $brand->brand_name }}</option>
+                                                        value="{{ $brand->id }}" {{  !empty(old('brand_id')) ? 'selected': ''}} >{{ $brand->brand_name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('brand_id')
@@ -125,7 +111,7 @@
                                             <option selected disabled>Select Color</option>
                                             @foreach( $colors as $color)
                                                 <option
-                                                    value="{{ $color->id }}" {{  ($color->id == $product->color_id) ? 'selected': ''}} >{{ $color->color_name }}</option>
+                                                    value="{{ $color->id }}" {{  !empty(old('color_id')) ? 'selected': ''}} >{{ $color->color_name }}</option>
                                             @endforeach
                                         </select>
 
@@ -148,7 +134,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Description</label>
-                                        <textarea class="form-control"  name="description">{{ (!empty(old('description'))) ? old('description'): $product->description }}</textarea>
+                                        <textarea class="form-control"
+                                                  name="description">{{ (!empty(old('description'))) ? old('description'): '' }}</textarea>
                                         @error('description')
                                         <p class="text-red mt-1">{{ $message }}</p>
                                         @enderror
