@@ -46,6 +46,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapShopRoutes();
+
         $this->mapCustomerRoutes();
 
         $this->mapAdminRoutes();
@@ -88,6 +90,25 @@ class RouteServiceProvider extends ServiceProvider
             'namespace' => $this->namespace,
         ], function ($router) {
             require base_path('routes/customer_temp.php');
+        });
+    }
+
+    /**
+     * Define the "shop" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapShopRoutes()
+    {
+        Route::group([
+            'middleware' => ['web', 'shop', 'auth:shop'],
+            'prefix' => 'shop',
+            'as' => 'shop.',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/shop.php');
         });
     }
 
