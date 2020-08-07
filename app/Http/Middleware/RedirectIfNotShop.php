@@ -18,7 +18,8 @@ class RedirectIfNotShop
 	public function handle($request, Closure $next, $guard = 'shop')
 	{
 	    if (!Auth::guard($guard)->check()) {
-	        return redirect('shop/login');
+	     //   return redirect('shop/login');
+	        return redirect('/');
 	    }
 
 	    return $next($request);

@@ -12,7 +12,7 @@ Route::get('/admin', function () {
 });
 
 Route::get('/shop', function () {
-    return redirect('shope/login');
+    return redirect('shop/login');
 });
 
 

@@ -18,7 +18,7 @@ class RedirectIfShop
 	public function handle($request, Closure $next, $guard = 'shop')
 	{
 	    if (Auth::guard($guard)->check()) {
-	        return redirect('shop/home');
+	        return redirect('shop/dashboard');
 	    }
 
 	    return $next($request);
