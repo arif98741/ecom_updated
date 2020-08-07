@@ -106,6 +106,7 @@
                                     <tr class="border-0">
                                         <th class="border-0">#</th>
                                         <th class="border-0">Image</th>
+                                        $12099
                                         <th class="border-0">Product Name</th>
                                         <th class="border-0">Product Id</th>
                                         <th class="border-0">Quantity</th>

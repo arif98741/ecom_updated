@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Color;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * Display a listing of the resource
+     * @return void
      */
     public function index()
     {
@@ -27,7 +28,9 @@ class ProductController extends Controller
     public function create()
     {
         $data = [
-            'categories' => Category::orderBy('category_name')
+            'categories' => Category::orderBy('category_name')->get(),
+            'brands' => Brand::orderBy('brand_name', 'asc')->get(),
+            'colors' => Color::orderBy('color_name', 'asc')->get(),
         ];
 
         return view('admin.product.create')->with($data);
@@ -37,7 +40,7 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return void
      */
     public function store(Request $request)
     {

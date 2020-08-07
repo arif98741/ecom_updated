@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="section-block" id="basicform" tabindex="-1">
-                    <h3 class="section-title">Add Product</h3>
+                    {{--                    <h3 class="section-title">Add Product</h3>--}}
                 </div>
                 <div class="card">
 
@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Category Name</label>
-                                        <select class="form-control" name="category_id">
+                                        <select class="form-control" id="category_dropdown" name="category_id">
                                             <option selected disabled>Select Category</option>
                                             @foreach( $categories as $category)
                                                 <option
@@ -61,9 +61,10 @@
 
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Sub Category Name</label>
-                                        <input name="sub_category_name"
-                                               value="{{ (!empty(old('sub_category_name'))) ? old('sub_category_name'): '' }}"
-                                               type="text" class="form-control">
+                                        <select class="form-control" id="sub_category_dropdown" name="sub_category_id">
+                                            <option selected disabled>Select Category</option>
+
+                                        </select>
                                         @error('sub_category_name')
                                         <p class="text-red mt-1">{{ $message }}</p>
                                         @enderror
@@ -89,9 +90,9 @@
                                         <label for="inputText3" class="col-form-label">Color</label>
                                         <select class="form-control" name="color_id">
                                             <option selected disabled>Select Color</option>
-                                            @foreach( $categories as $category)
+                                            @foreach( $colors as $color)
                                                 <option
-                                                    value="{{ $category->id }}" {{  !empty(old('category_id')) ? 'selected': ''}} >{{ $color->color_name }}</option>
+                                                    value="{{ $color->id }}" {{  !empty(old('color_id')) ? 'selected': ''}} >{{ $color->color_name }}</option>
                                             @endforeach
                                         </select>
 
@@ -124,4 +125,44 @@
             </div>
         </div>
     </div>
+    @push('extra-js')
+
+        <script>
+            $(document).ready(function () {
+                /**
+                 * get single sub category
+                 */
+                $('#category_dropdown').change(function () {
+                    let category_id = $(this).val();
+                    $.ajax({
+                        'url': '{{ url('api/category/single_sub_category') }}',
+                        'dataType': 'json',
+                        'method': 'post',
+                        'data': {
+                            'category_id': category_id,
+                            'token': '$2y$10$a0ysRqMZxVO/8XJCNMyAouXBvwXoj5yP8.KkiRePF3lX2dOW52llK'
+                        },
+                        'success': function (response) {
+
+                            if (response.code == 200) {
+                                $.each(response.data, function (key, value) {
+                                    console.log(value);
+
+                                    $('#sub_category_dropdown')
+                                        .append($("<option></option>")
+                                            .attr("value", value.id)
+                                            .text(value.sub_category_name));
+
+                                });
+
+                            }
+
+                        }, error: function (e) {
+                            console.log(e);
+                        }
+                    })
+                });
+            });
+        </script>
+    @endpush
 @endsection
