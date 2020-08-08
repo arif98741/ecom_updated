@@ -16,8 +16,8 @@ Route::get('/shop', function () {
 });
 
 
-Route::get('/customer_temp', function () {
-    return redirect('customer_temp/login');
+Route::get('/customer', function () {
+    return redirect('customer/login');
 });
 
 Auth::routes();
@@ -86,4 +86,18 @@ Route::group(['prefix' => 'shop'], function () {
     Route::post('/password/reset', 'Shop\Auth\ResetPasswordController@reset')->name('password.email');
     Route::get('/password/reset', 'Shop\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
     Route::get('/password/reset/{token}', 'Shop\Auth\ResetPasswordController@showResetForm');
+});
+
+Route::group(['prefix' => 'customer'], function () {
+  Route::get('/login', 'Customer\Auth\LoginController@showLoginForm')->name('login');
+  Route::post('/login', 'Customer\Auth\LoginController@login');
+  Route::post('/logout', 'Customer\Auth\LoginController@logout')->name('logout');
+
+  Route::get('/register', 'Customer\Auth\RegisterController@showRegistrationForm')->name('register');
+  Route::post('/register', 'Customer\Auth\RegisterController@register');
+
+  Route::post('/password/email', 'Customer\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');
+  Route::post('/password/reset', 'Customer\Auth\ResetPasswordController@reset')->name('password.email');
+  Route::get('/password/reset', 'Customer\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+  Route::get('/password/reset/{token}', 'Customer\Auth\ResetPasswordController@showResetForm');
 });

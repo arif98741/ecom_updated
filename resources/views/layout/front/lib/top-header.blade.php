@@ -39,8 +39,17 @@
                                                                                   aria-hidden="true"></i><span>My Account</span>
                                         <span class="caret"></span></a>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="register.html">Register</a></li>
-                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="{{ url('customer/register') }}">Register</a></li>
+                                        <li><a href="{{ url('customer/register') }}">Login</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#" title="My Account" class="dropdown-toggle"
+                                                        data-toggle="dropdown"><i class="fa fa-user"
+                                                                                  aria-hidden="true"></i><span>Vendor Account</span>
+                                        <span class="caret"></span></a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="{{ url('shop/register') }}">Register</a></li>
+                                        <li><a href="{{ url('shop/login') }}">Login</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#" id="wishlist-total" title="Wish List (0)"><i class="fa fa-heart"

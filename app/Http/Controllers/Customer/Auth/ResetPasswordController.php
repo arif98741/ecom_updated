@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Customer\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\PasswordBroker;
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -31,7 +28,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    public $redirectTo = '/customer_temp/home';
+    public $redirectTo = '/customer/home';
 
 
     /**
@@ -41,7 +38,7 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('customer_temp.guest');
+        $this->middleware('customer.guest');
     }
 
     /**
@@ -49,13 +46,13 @@ class ResetPasswordController extends Controller
      *
      * If no token is present, display the link request form.
      *
-     * @param Request $request
-     * @param string|null $token
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string|null  $token
+     * @return \Illuminate\Http\Response
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('customer_temp.auth.passwords.reset')->with(
+        return view('customer.auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
@@ -63,7 +60,7 @@ class ResetPasswordController extends Controller
     /**
      * Get the broker to be used during password reset.
      *
-     * @return PasswordBroker
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
     public function broker()
     {
@@ -73,10 +70,10 @@ class ResetPasswordController extends Controller
     /**
      * Get the guard to be used during password reset.
      *
-     * @return StatefulGuard
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
     protected function guard()
     {
-        return Auth::guard('customer_temp');
+        return Auth::guard('customer');
     }
 }

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Customer\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
@@ -30,23 +28,23 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('customer_temp.guest');
+        $this->middleware('customer.guest');
     }
 
     /**
      * Display the form to request a password reset link.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function showLinkRequestForm()
     {
-        return view('customer_temp.auth.passwords.email');
+        return view('customer.auth.passwords.email');
     }
 
     /**
      * Get the broker to be used during password reset.
      *
-     * @return PasswordBroker
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
     public function broker()
     {

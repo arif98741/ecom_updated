@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Customer\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Validator;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -30,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/customer_temp/home';
+    protected $redirectTo = '/customer/home';
 
     /**
      * Create a new controller instance.
@@ -39,23 +37,13 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('customer_temp.guest');
-    }
-
-    /**
-     * Show the application registration form.
-     *
-     * @return Response
-     */
-    public function showRegistrationForm()
-    {
-        return view('customer_temp.auth.register');
+        $this->middleware('customer.guest');
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param array $data
+     * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -70,7 +58,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param array $data
+     * @param  array  $data
      * @return Customer
      */
     protected function create(array $data)
@@ -83,12 +71,22 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('customer.auth.register');
+    }
+
+    /**
      * Get the guard to be used during registration.
      *
-     * @return StatefulGuard
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
     protected function guard()
     {
-        return Auth::guard('customer_temp');
+        return Auth::guard('customer');
     }
 }

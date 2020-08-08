@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Customer\Auth;
 
-use AlAminFirdows\LaravelMultiAuth\Traits\LogsoutGuard;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use AlAminFirdows\LaravelMultiAuth\Traits\LogsoutGuard;
 
 class LoginController extends Controller
 {
@@ -31,7 +29,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    public $redirectTo = '/customer_temp/home';
+    public $redirectTo = '/';
+    //public $redirectTo = '/customer/home';
 
     /**
      * Create a new controller instance.
@@ -40,26 +39,26 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('customer_temp.guest', ['except' => 'logout']);
+        $this->middleware('customer.guest', ['except' => 'logout']);
     }
 
     /**
      * Show the application's login form.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function showLoginForm()
     {
-        return view('customer_temp.auth.login');
+        return view('front.customer.auth.login');
     }
 
     /**
      * Get the guard to be used during authentication.
      *
-     * @return StatefulGuard
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
     protected function guard()
     {
-        return Auth::guard('customer_temp');
+        return Auth::guard('customer');
     }
 }
